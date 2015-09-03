@@ -1,0 +1,28 @@
+{
+  "name": "trafficlight-react",
+  "version": "0.0.0",
+  "authors": [
+    "Jonathan Dahan <jonathan@jonathan.is>"
+  ],
+  "description": "control the tergiplex traffic light",
+  "main": "index.html",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "hardware",
+    "tergiplex"
+  ],
+  "license": "MIT",
+  "homepage": "http://terg.is/tl",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.13.3"
+  }
+}

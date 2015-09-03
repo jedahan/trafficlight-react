@@ -1,0 +1,61 @@
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <title>Tergiplex TrafficLight</title>
+    <style>
+      .ledOn { opacity: 1.0; }
+      .ledOff { opacity: 0.2; }
+    </style>
+  </head>
+  <body>
+    <h1>The Tergiplex TrafficLight</h1>
+
+    <div id="container">
+      <span id="red"></span>
+      <span id="yellow"></span>
+      <span id="green"></span>
+    </div>
+
+    <script src="bower_components/react/react.js"></script>
+    <script src="bower_components/react/JSXTransformer.js"></script>
+    <script src="//cdn.jsdelivr.net/sparkjs/0.5.9/spark.min.js"></script>
+
+    <script type="text/jsx">
+      var lights = ["green","yellow","red"];
+      var Light = React.createClass({
+        render: function() {
+          return <button className={this.props.on}>{this.props.name}</button>;
+        }
+      });
+
+      var foundDevice = null;
+      spark.login({accessToken: ''}, function(err, body) {
+        console.log('Spark Login', err, body);
+        spark.listDevices(function(err, devices) {
+          for (var i=0; i<devices.length; i++) {
+            if (devices[i].name == 'tergiaplex') {
+              foundDevice = devices[i];
+              console.log('Found Device', devices[i]);
+              console.log(foundDevice.callFunction('getStatus'));
+              foundDevice.subscribe('led', function(data) {
+
+                var light = lights[parseInt(data.data)];
+                console.log(data,light);
+                React.render(<Light on={data.name} name={light} />, document.getElementById(light));
+              });
+            }
+          }
+        });
+
+        for (var i = 0; i < lights.length; i++) {
+          document.getElementById(lights[i]).onclick = (function(i) {
+            return function(){
+              if (foundDevice != null) {
+                foundDevice.callFunction('ledToggle', i.toString())
+              }
+            }
+          })(i);
+        };
+      });
+    </script>
+  </body>
+</html>
