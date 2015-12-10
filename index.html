@@ -1,60 +1,53 @@
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <meta charset="UTF-8" />
     <title>Tergiplex TrafficLight</title>
     <style>
-      .ledOn { opacity: 1.0; }
-      .ledOff { opacity: 0.2; }
+      .on { opacity: 1.0; }
+      .off { opacity: 0.2; }
     </style>
+    <script src="app/components/react/react.js"></script>
+    <script src="app/components/react/react-dom.js"></script>
+    <script src="app/components/babel/browser.min.js"></script>
+    <script src="app/components/spark/dist/spark.min.js"></script>
   </head>
+
   <body>
     <h1>The Tergiplex TrafficLight</h1>
 
-    <div id="container">
-      <span id="red"></span>
-      <span id="yellow"></span>
-      <span id="green"></span>
+    <div id="trafficlight">
+      <div id="red"></div>
+      <div id="yellow"></div>
+      <div id="green"></div>
     </div>
 
-    <script src="app/components/react/react.js"></script>
-    <script src="app/components/react/JSXTransformer.js"></script>
-    <script src="//cdn.jsdelivr.net/sparkjs/1.0.0/spark.min.js"></script>
+    <script type="text/babel">
+      const colors = [ "red", "yellow", "green" ]
 
-    <script type="text/jsx">
-      var lights = ["green","yellow","red"];
-      var Light = React.createClass({
-        render: function() {
-          return <button className={this.props.on}>{this.props.name}</button>;
+      const Light = React.createClass({
+        handleClick() {
+          pizza_zombie.callFunction('ledToggle', this.props.pin)
+        },
+        render() {
+          return <button onClick={this.handleClick} className={this.props.on ? 'on' : 'off'}> { colors[this.props.pin] } </button>;
         }
       });
-
-      var foundDevice = null;
-      spark.login({accessToken: ''}, function(err, body) {
-        console.log('Spark Login', err, body);
-        spark.listDevices(function(err, devices) {
-          for (var i=0; i<devices.length; i++) {
-            if (devices[i].name == 'tergiaplex') {
-              foundDevice = devices[i];
-              console.log('Found Device', devices[i]);
-              console.log(foundDevice.callFunction('getStatus'));
-              foundDevice.subscribe('led', function(data) {
-
-                var light = lights[parseInt(data.data)];
-                console.log(data,light);
-                React.render(<Light on={data.name} name={light} />, document.getElementById(light));
-              });
+      var pizza_zombie = null;
+      spark.login({accessToken: '7fcc04bfd1c4450eed1c1c91ec3e3ec09a3fa9c6'}, (err, body) => {
+        spark.listDevices((err, devices) => {
+          for (let device of devices) {
+            if (device.name == 'pizza_zombie') {
+              pizza_zombie = device
+              pizza_zombie.callFunction('getStatus')
+              pizza_zombie.subscribe('led', (data) => {
+                const pin = parseInt(data.data)
+                const on = data.name==`ledOn`
+                ReactDOM.render(<Light on={on} pin={pin} />, document.getElementById(colors[pin]))
+              })
             }
           }
         });
-
-        for (var i = 0; i < lights.length; i++) {
-          document.getElementById(lights[i]).onclick = (function(i) {
-            return function(){
-              if (foundDevice != null) {
-                foundDevice.callFunction('ledToggle', i.toString())
-              }
-            }
-          })(i);
-        };
       });
     </script>
   </body>
