@@ -4,16 +4,13 @@
   "description": "First add your key to the spark core login:",
   "main": "app.js",
   "dependencies": {
-    "babel": "^6.3.13",
-    "babel-cli": "^6.3.17",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jspm": "^0.16.15"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel app.jsx --watch --out-file app.js --source-maps",
-    "server": "devd . --watch index.html"
+    "start": "devd . --watch index.html --watch lib/main.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +21,18 @@
   "bugs": {
     "url": "https://github.com/jedahan/trafficlight-react/issues"
   },
-  "homepage": "https://github.com/jedahan/trafficlight-react#readme"
+  "homepage": "https://github.com/jedahan/trafficlight-react#readme",
+  "jspm": {
+    "dependencies": {
+      "react": "npm:react@^0.14.3",
+      "react-addons-update": "npm:react-addons-update@^0.14.3",
+      "react-dom": "npm:react-dom@^0.14.3",
+      "spark": "npm:spark@^1.0.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
 }

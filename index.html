@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Tergiplex TrafficLight</title>
-    <style>
-      .on { opacity: 1.0; }
-      .off { opacity: 0.2; }
-    </style>
-    <script src="app/components/react/react-with-addons.js"></script>
-    <script src="app/components/react/react-dom.js"></script>
-    <script src="app/components/spark/dist/spark.min.js"></script>
-    <script src="app.js"></script>
-  </head>
+<head>
+<meta charset="UTF-8" />
+<title>Tergiplex TrafficLight</title>
+<style>
+  .on { opacity: 1.0; }
+  .off { opacity: 0.2; }
+</style>
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>
+  System.import('lib/main');
+</script>
 
-  <body>
-    <h1>The Tergiplex TrafficLight</h1>
+</head>
+<body>
+  <h1>The Tergiplex TrafficLight</h1>
 
-    <div id="trafficlight"></div>
+  <div id="trafficlight"></div>
 
-  </body>
+
+</body>
 </html>

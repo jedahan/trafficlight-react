@@ -2,4 +2,6 @@ app/
 app.js
 app.js.map
 node_modules/
+config.js
+jspm_packages/
 .DS_Store
