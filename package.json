@@ -1,0 +1,28 @@
+{
+  "name": "trafficlight-react",
+  "version": "1.0.0",
+  "description": "First add your key to the spark core login:",
+  "main": "app.js",
+  "dependencies": {
+    "babel": "^6.3.13",
+    "babel-cli": "^6.3.17",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel app.jsx --watch --out-file app.js --source-maps",
+    "server": "devd . --watch index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jedahan/trafficlight-react.git"
+  },
+  "author": "Jonathan Dahan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jedahan/trafficlight-react/issues"
+  },
+  "homepage": "https://github.com/jedahan/trafficlight-react#readme"
+}
